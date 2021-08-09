@@ -1,28 +1,27 @@
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class StreamTest {
 
     private static Stream stream ;
     private static List<Game> games;
-
+    private Game game1=  new Game("Call of Duty", 9, Genre.FPS);
+    private Game game2=  new Game("GTA6", 10, Genre.ACTION);
+    private Game game3=  new Game("Super Mario", 11, Genre.RETRO);
+    private Game game4=  new Game("Load Runner", 7, Genre.RETRO);
+    private Game game5=  new Game("Street Fighter", 8,Genre.RETRO);
     @BeforeEach
     public void setup() {
         games = new ArrayList<>();
-        var game1 = new Game("Call of Duty", 9);
-        var game2 = new Game("GTA6", 10);
-        var game3 = new Game("Super Mario", 10);
         games.add(game1);
         games.add(game2);
         games.add(game3);
+        games.add(game4);
+        games.add(game5);
         stream = new Stream();
-
     }
 
     @Test
@@ -34,7 +33,7 @@ public class StreamTest {
 
     @Test
     public void getGamesCount() {
-        Assertions.assertEquals(3L, stream.getGamesCount(games));
+        Assertions.assertEquals(5L, stream.getGamesCount(games));
     }
 
     @Test
@@ -46,18 +45,6 @@ public class StreamTest {
 
     @Test
     public void sortGamesbyTheirTitle() {
-        List<Game> games = new ArrayList<>();
-        var game1 = new Game("Call of Duty", 9);
-        var game2 = new Game("GTA6", 10);
-        var game3 = new Game("Super Mario", 10);
-        var game4 = new Game("Load Runner", 8);
-        var game5 = new Game("Street Fighter", 8);
-        games.add(game1);
-        games.add(game2);
-        games.add(game3);
-        games.add(game4);
-        games.add(game5);
-
         List<Game> gamesSorted = new ArrayList<>();
         gamesSorted.add(game1);
         gamesSorted.add(game2);
@@ -68,4 +55,37 @@ public class StreamTest {
                 assertEquals(gamesSorted,
                         stream.sortGamesbyTheirTitle(games));
     }
+    @Test
+    public void sortDescendingGamesByTheirTitle() {
+        List<Game> gamesDescendingSorted = new ArrayList<>();
+        gamesDescendingSorted.add(game3);
+        gamesDescendingSorted.add(game5);
+        gamesDescendingSorted.add(game4);
+        gamesDescendingSorted.add(game2);
+        gamesDescendingSorted.add(game1);
+        Assertions.
+                assertEquals(gamesDescendingSorted,
+                        stream.sortDescendingGamesByTheirTitle(games));
+    }
+
+    @Test
+    public void getTheFirstGame() {
+        Assertions.
+                assertEquals(List.of(game1),
+                        stream.getTheFirstGame(games));
+    }
+    @Test
+    public void getSummary() {
+        Assertions.assertTrue(stream.summary(games).getMax()==11);
+        Assertions.assertTrue(stream.summary(games).getMin()==7);
+    }
+
+    @Test
+    public void groupByGenre() {
+        Assertions.
+                assertEquals(List.of(game3, game4, game5),
+                        stream.groupByRetro(games));
+    }
+
+
 }
