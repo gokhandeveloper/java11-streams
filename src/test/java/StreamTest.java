@@ -57,8 +57,15 @@ public class StreamTest {
         games.add(game3);
         games.add(game4);
         games.add(game5);
+
+        List<Game> gamesSorted = new ArrayList<>();
+        gamesSorted.add(game1);
+        gamesSorted.add(game2);
+        gamesSorted.add(game4);
+        gamesSorted.add(game5);
+        gamesSorted.add(game3);
         Assertions.
-                assertEquals(List.of(games.get(1)),
+                assertEquals(gamesSorted,
                         stream.sortGamesbyTheirTitle(games));
     }
 }

@@ -7,4 +7,8 @@ public class Game {
         this.rating =rating;
         this.title=title;
     }
+
+    public String getTitle() {
+        return this.title;
+    }
 }
